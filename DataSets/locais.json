@@ -1,0 +1,523 @@
+{
+    "Codigo":"PT",
+    "Nome":"Portugal",
+    "Partes":[
+        {
+            "Codigo": "1", 
+            "Local": "Continente", 
+            "Zonas": [
+                {
+                    "Codigo": "11", 
+                    "Local": "Norte", 
+                    "Regioes": [
+                        {
+                            "regions": [
+                              {
+                                "Codigo": "111",
+                                "Nome": "Alto Minho",
+                                "Municipios": [
+                                  {"Codigo": "1601", "Nome": "Arcos de Valdevez"},
+                                  {"Codigo": "1602", "Nome": "Caminha"},
+                                  {"Codigo": "1603", "Nome": "Melgaço"},
+                                  {"Codigo": "1604", "Nome": "Monção"},
+                                  {"Codigo": "1605", "Nome": "Paredes de Coura"},
+                                  {"Codigo": "1606", "Nome": "Ponte da Barca"},
+                                  {"Codigo": "1607", "Nome": "Ponte de Lima"},
+                                  {"Codigo": "1608", "Nome": "Valença"},
+                                  {"Codigo": "1609", "Nome": "Viana do Castelo"},
+                                  {"Codigo": "1610", "Nome": "Vila Nova de Cerveira"}
+                                ]
+                              },
+                              {
+                                "Codigo": "112",
+                                "Nome": "Cávado",
+                                "Municipios": [
+                                  {"Codigo": "0301", "Nome": "Amares"},
+                                  {"Codigo": "0302", "Nome": "Barcelos"},
+                                  {"Codigo": "0303", "Nome": "Braga"},
+                                  {"Codigo": "0306", "Nome": "Esposende"},
+                                  {"Codigo": "0310", "Nome": "Terras de Bouro"},
+                                  {"Codigo": "0313", "Nome": "Vila Verde"}
+                                ]
+                              },
+                              {
+                                "Codigo": "119",
+                                "Nome": "Ave",
+                                "Municipios": [
+                                  {"Codigo": "0304", "Nome": "Cabeceiras de Basto"},
+                                  {"Codigo": "0307", "Nome": "Fafe"},
+                                  {"Codigo": "0308", "Nome": "Guimarães"},
+                                  {"Codigo": "1705", "Nome": "Mondim de Basto"},
+                                  {"Codigo": "0309", "Nome": "Póvoa de Lanhoso"},
+                                  {"Codigo": "0311", "Nome": "Vieira do Minho"},
+                                  {"Codigo": "0312", "Nome": "Vila Nova de Famalicão"},
+                                  {"Codigo": "0314", "Nome": "Vizela"}
+                                ]
+                              },
+                              {
+                                "Codigo": "11A",
+                                "Nome": "Área Metropolitana do Porto",
+                                "Municipios": [
+                                  {"Codigo": "0104", "Nome": "Arouca"},
+                                  {"Codigo": "0107", "Nome": "Espinho"},
+                                  {"Codigo": "1304", "Nome": "Gondomar"},
+                                  {"Codigo": "1306", "Nome": "Maia"},
+                                  {"Codigo": "1308", "Nome": "Matosinhos"},
+                                  {"Codigo": "0113", "Nome": "Oliveria de Azeméis"},
+                                  {"Codigo": "1310", "Nome": "Paredes"},
+                                  {"Codigo": "1312", "Nome": "Porto"},
+                                  {"Codigo": "1313", "Nome": "Póvoa de Varzim"},
+                                  {"Codigo": "0109", "Nome": "Santa Maria da Feira"},
+                                  {"Codigo": "1315", "Nome": "Valongo"},
+                                  {"Codigo": "41314", "Nome": "Santo Tirso"},
+                                  {"Codigo": "0116", "Nome": "São João da Madeira"},
+                                  {"Codigo": "1318", "Nome": "Trofa"},
+                                  {"Codigo": "1316", "Nome": "Vila do Conde"},
+                                  {"Codigo": "0119", "Nome": "Vale de Cambra"},
+                                  {"Codigo": "1317", "Nome": "Vila Nova de Gaia"}
+                                ]
+                              },
+                              {
+                                "Codigo": "11B",
+                                "Nome": "Alto Tâmega",
+                                "Municipios": [
+                                  {"Codigo": "1702", "Nome": "Boticas"},
+                                  {"Codigo": "1703", "Nome": "Chaves"},
+                                  {"Codigo": "1706", "Nome": "Montalegre"},
+                                  {"Codigo": "1709", "Nome": "Ribeira de Pena"},
+                                  {"Codigo": "1712", "Nome": "Valpaços"},
+                                  {"Codigo": "1713", "Nome": "Vila Pouca de Aguiar"}
+                                ]
+                              },
+                              {
+                                "Codigo": "11C",
+                                "Nome": "Tâmega e Sousa",
+                                "Municipios": [
+                                  {"Codigo": "1301", "Nome": "Amarante"},
+                                  {"Codigo": "1302", "Nome": "Baião"},
+                                  {"Codigo": "0106", "Nome": "Castelo de Paiva"},
+                                  {"Codigo": "0305", "Nome": "Celorico de Basto"},
+                                  {"Codigo": "1804", "Nome": "Cinfaes"},
+                                  {"Codigo": "1303", "Nome": "Felgueiras"},
+                                  {"Codigo": "1305", "Nome": "Lousada"},
+                                  {"Codigo": "1307", "Nome": "Marco de Canaveses"},
+                                  {"Codigo": "1309", "Nome": "Paços de Ferreira"},
+                                  {"Codigo": "1311", "Nome": "Penafiel"},
+                                  {"Codigo": "1813", "Nome": "Resende"}
+                                ]
+                              },
+                              {
+                                "Codigo": "11D",
+                                "Nome": "Douro",
+                                "Municipios": [
+                                  {"Codigo": "1701", "Nome": "Alijó"},
+                                  {"Codigo": "1801", "Nome": "Armamar"},
+                                  {"Codigo": "0403", "Nome": "Carrazeda de Ansiães"},
+                                  {"Codigo": "0404", "Nome": "Freixo de Espada à Cinta"},
+                                  {"Codigo": "1805", "Nome": "Lamego"},
+                                  {"Codigo": "1704", "Nome": "Mesão Frio"},
+                                  {"Codigo": "1807", "Nome": "Moimenta da Beira"},
+                                  {"Codigo": "1707", "Nome": "Murça"},
+                                  {"Codigo": "1812", "Nome": "Penedono"},
+                                  {"Codigo": "1708", "Nome": "Peso da Régua"},
+                                  {"Codigo": "1710", "Nome": "Sabrosa"},
+                                  {"Codigo": "1711", "Nome": "Santa Marta de Penaguião"},
+                                  {"Codigo": "1815", "Nome": "São João da Pesqueira"},
+                                  {"Codigo": "1818", "Nome": "Sernancelhe"},
+                                  {"Codigo": "1819", "Nome": "Tabuaço"},
+                                  {"Codigo": "1820", "Nome": "Tarouca"},
+                                  {"Codigo": "0409", "Nome": "Torre de Moncorvo"},
+                                  {"Codigo": "0414", "Nome": "Vila Nova de Foz Côa"},
+                                  {"Codigo": "1714", "Nome": "Vila Real"}
+                                ]
+                              },
+                              {
+                                "Codigo": "11E",
+                                "Nome": "Terras de Trás-os-Montes",
+                                "Municipios": [
+                                  {"Codigo": "0401", "Nome": "Alfândega da Fé"},
+                                  {"Codigo": "0402", "Nome": "Bragança"},
+                                  {"Codigo": "0405", "Nome": "Macedo de Cavaleiros"},
+                                  {"Codigo": "0406", "Nome": "Miranda do Douro"},
+                                  {"Codigo": "0407", "Nome": "Mirandela"},
+                                  {"Codigo": "0406", "Nome": "Mogadouro"},
+                                  {"Codigo": "0410", "Nome": "Vila Flor"},
+                                  {"Codigo": "0411", "Nome": "Vimoso"},
+                                  {"Codigo": "0412", "Nome": "Vinhais"}
+                                ]
+                              }
+                            ]
+                          }
+                          
+                    ]
+                },
+                {
+                    "Codigo": "16", 
+                    "Local": "Centro", 
+                    "Regioes": [
+                      {
+                        "Codigo": "16B",
+                        "Nome": "Oeste",
+                        "Municipios": [
+                          {"Codigo": "1001", "Nome": "Alcobaça"},
+                          {"Codigo": "1101", "Nome": "Alenquer"},
+                          {"Codigo": "1102", "Nome": "Arruda dos Vinhos"},
+                          {"Codigo": "1005", "Nome": "Bombarral"},
+                          {"Codigo": "1104", "Nome": "Cadaval"},
+                          {"Codigo": "1006", "Nome": "Caldas da Rainha"},
+                          {"Codigo": "1108", "Nome": "Lourinhã"},
+                          {"Codigo": "1011", "Nome": "Nazaré"},
+                          {"Codigo": "1012", "Nome": "Óbidos"},
+                          {"Codigo": "1014", "Nome": "Peniche"},
+                          {"Codigo": "1112", "Nome": "Sobral de Monte Agraço"},
+                          {"Codigo": "1113", "Nome": "Torres Vedras"}
+                        ]
+                      },
+                      {
+                        "Codigo": "16D",
+                        "Nome": "Região de Aveiro",
+                        "Municipios": [
+                          {"Codigo": "0101", "Nome": "Águeda"},
+                          {"Codigo": "0102", "Nome": "Albergaria-a-Velha"},
+                          {"Codigo": "0103", "Nome": "Anadia"},
+                          {"Codigo": "0105", "Nome": "Aveiro"},
+                          {"Codigo": "0108", "Nome": "Estarreja"},
+                          {"Codigo": "0110", "Nome": "Ílhavo"},
+                          {"Codigo": "0112", "Nome": "Murtosa"},
+                          {"Codigo": "0114", "Nome": "Oliveira do Bairro"},
+                          {"Codigo": "0115", "Nome": "Ovar"},
+                          {"Codigo": "0117", "Nome": "Sever do Vouga"},
+                          {"Codigo": "0118", "Nome": "Vagos"}
+                        ]
+                      },
+                      {
+                        "Codigo": "16E",
+                        "Nome": "Região de Coimbra",
+                        "Municipios": [
+                          {"Codigo": "0601", "Nome": "Arganil"},
+                          {"Codigo": "0602", "Nome": "Cantanhede"},
+                          {"Codigo": "0603", "Nome": "Coimbra"},
+                          {"Codigo": "0604", "Nome": "Condeixa-a-Nova"},
+                          {"Codigo": "0605", "Nome": "Figueira da Foz"},
+                          {"Codigo": "0606", "Nome": "Góis"},
+                          {"Codigo": "0607", "Nome": "Lousã"},
+                          {"Codigo": "0111", "Nome": "Mealhada"},
+                          {"Codigo": "0608", "Nome": "Mira"},
+                          {"Codigo": "0609", "Nome": "Miranda do Corvo"},
+                          {"Codigo": "0610", "Nome": "Montemor-o-Velho"},
+                          {"Codigo": "1808", "Nome": "Mortágua"},
+                          {"Codigo": "0611", "Nome": "Oliveira do Hospital"},
+                          {"Codigo": "0612", "Nome": "Pampilhosa da Serra"},
+                          {"Codigo": "0613", "Nome": "Penacova"},
+                          {"Codigo": "0614", "Nome": "Penela"},
+                          {"Codigo": "0615", "Nome": "Soure"},
+                          {"Codigo": "0616", "Nome": "Tábua"},
+                          {"Codigo": "0617", "Nome": "Vila Nova de Poiares"}
+                        ]
+                      },
+                      {
+                        "Codigo": "16F",
+                        "Nome": "Região de Leiria",
+                        "Municipios": [
+                          {"Codigo": "1002", "Nome": "Alvaiázere"},
+                          {"Codigo": "1003", "Nome": "Ansião"},
+                          {"Codigo": "1004", "Nome": "Batalha"},
+                          {"Codigo": "1007", "Nome": "Castanheira de Pêra"},
+                          {"Codigo": "1008", "Nome": "Figueiró dos Vinhos"},
+                          {"Codigo": "1009", "Nome": "Leiria"},
+                          {"Codigo": "1010", "Nome": "Marinha Grande"},
+                          {"Codigo": "1013", "Nome": "Pedrógão Grande"},
+                          {"Codigo": "1015", "Nome": "Pombal"},
+                          {"Codigo": "1016", "Nome": "Porto de Mós"}
+                        ]
+                      },
+                      {
+                        "Codigo": "16G",
+                        "Nome": "Viseu Dão Lafões",
+                        "Municipios": [
+                          {"Codigo": "0901", "Nome": "Aguiar da Beira"},
+                          {"Codigo": "1802", "Nome": "Carregal do Sal"},
+                          {"Codigo": "1803", "Nome": "Castro Daire"},
+                          {"Codigo": "1806", "Nome": "Mangualde"},
+                          {"Codigo": "1809", "Nome": "Nelas"},
+                          {"Codigo": "1810", "Nome": "Oliveira de Frades"},
+                          {"Codigo": "1811", "Nome": "Penalva do Castelo"},
+                          {"Codigo": "1814", "Nome": "Santa Comba Dão"},
+                          {"Codigo": "1816", "Nome": "São Pedro do Sul"},
+                          {"Codigo": "1817", "Nome": "Sátão"},
+                          {"Codigo": "1821", "Nome": "Tondela"},
+                          {"Codigo": "1822", "Nome": "Vila Nova de Paiva"},
+                          {"Codigo": "1823", "Nome": "Viseu"},
+                          {"Codigo": "1824", "Nome": "Vouzela"}
+                        ]
+                      },
+                      {
+                        "Codigo": "16H",
+                        "Nome": "Beira Baixa",
+                        "Municipios": [
+                          {"Codigo": "0502", "Nome": "Castelo Branco"},
+                          {"Codigo": "0505", "Nome": "Idanha-a-Nova"},
+                          {"Codigo": "0506", "Nome": "Oleiros"},
+                          {"Codigo": "0507", "Nome": "Penamacor"},
+                          {"Codigo": "0508", "Nome": "Proença-a-Nova"},
+                          {"Codigo": "0511", "Nome": "Vila Velha de Ródão"}
+                        ]
+                      },
+                      {
+                        "Codigo": "16I",
+                        "Nome": "Médio Tejo",
+                        "Municipios": [
+                          {"Codigo": "1401", "Nome": "Abrantes"},
+                          {"Codigo": "1402", "Nome": "Alcanena"},
+                          {"Codigo": "1408", "Nome": "Constância"},
+                          {"Codigo": "1410", "Nome": "Entroncamento"},
+                          {"Codigo": "1411", "Nome": "Ferreira do Zêzere"},
+                          {"Codigo": "1413", "Nome": "Mção"},
+                          {"Codigo": "1421", "Nome": "Ourém"},
+                          {"Codigo": "1417", "Nome": "Sardoal"},
+                          {"Codigo": "0509", "Nome": "Sertã"},
+                          {"Codigo": "1418", "Nome": "Tomar"},
+                          {"Codigo": "1419", "Nome": "Torres Novas"},
+                          {"Codigo": "0510", "Nome": "Vila de Rei"},
+                          {"Codigo": "1420", "Nome": "Vila Nova da Barquinha"}
+                        ]
+                      },
+                      {
+                        "Codigo": "16J",
+                        "Nome": "Beiras e Serra da Estrela",
+                        "Municipios": [
+                          {"Codigo": "0902", "Nome": "Almeida"},
+                          {"Codigo": "0501", "Nome": "Belmonte"},
+                          {"Codigo": "0903", "Nome": "Celorico da Beira"},
+                          {"Codigo": "0503", "Nome": "Covilhã"},
+                          {"Codigo": "0904", "Nome": "Figueira Castelo Rodrigo"},
+                          {"Codigo": "0905", "Nome": "Fornos de Algodres"},
+                          {"Codigo": "0504", "Nome": "Fundão"},
+                          {"Codigo": "0906", "Nome": "Gouveia"},
+                          {"Codigo": "0907", "Nome": "Guarda"},
+                          {"Codigo": "0908", "Nome": "Manteigas"},
+                          {"Codigo": "0909", "Nome": "Mêda"},
+                          {"Codigo": "0910", "Nome": "Pinhel"},
+                          {"Codigo": "0911", "Nome": "Sabugal"},
+                          {"Codigo": "0912", "Nome": "Seia"},
+                          {"Codigo": "0913", "Nome": "Trancoso"}
+                        ]
+                      }
+                    ]
+                },
+                {
+                    "Codigo": "17", 
+                    "Local": "Lisboa", 
+                    "Regioes": [
+                      {
+                        "Codigo": "170",
+                        "Nome": "Área Metropolitana de Lisboa",
+                        "Municipios": [
+                          {"Codigo": "1502", "Nome": "Alcochete"},
+                          {"Codigo": "1503", "Nome": "Almada"},
+                          {"Codigo": "1115", "Nome": "Amadora"},
+                          {"Codigo": "1504", "Nome": "Barreiro"},
+                          {"Codigo": "1105", "Nome": "Cascais"},
+                          {"Codigo": "1106", "Nome": "Lisboa"},
+                          {"Codigo": "1107", "Nome": "Loures"},
+                          {"Codigo": "1109", "Nome": "Mafra"},
+                          {"Codigo": "1506", "Nome": "Moita"},
+                          {"Codigo": "1507", "Nome": "Montijo"},
+                          {"Codigo": "1116", "Nome": "Odivelas"},
+                          {"Codigo": "1110", "Nome": "Oeiras"},
+                          {"Codigo": "1508", "Nome": "Palmela"},
+                          {"Codigo": "1510", "Nome": "Seixal"},
+                          {"Codigo": "1511", "Nome": "Sesimbra"},
+                          {"Codigo": "1512", "Nome": "Setúbal"},
+                          {"Codigo": "1111", "Nome": "Sintra"},
+                          {"Codigo": "1114", "Nome": "Vila Franca de Xira"}
+                        ]
+                      }
+                    ]
+                },
+                {
+                    "Codigo": "18",
+                    "Local": "Alentejo",
+                    "Regioes": [
+                      {
+                        "Codigo": "181",
+                        "Nome": "Alentejo Litoral",
+                        "Municipios": [
+                          {"Codigo": "1501", "Nome": "Alcácer do Sal"},
+                          {"Codigo": "1505", "Nome": "Grândola"},
+                          {"Codigo": "0211", "Nome": "Odemira"},
+                          {"Codigo": "1509", "Nome": "Santiago do Cacém"},
+                          {"Codigo": "1513", "Nome": "Sines"}
+                        ]
+                      },
+                      {
+                        "Codigo": "184",
+                        "Nome": "Baixo Alentejo",
+                        "Municipios": [
+                          {"Codigo": "0201", "Nome": "Aljustrel"},
+                          {"Codigo": "0202", "Nome": "Almodôvar"},
+                          {"Codigo": "0203", "Nome": "Alvito"},
+                          {"Codigo": "0204", "Nome": "Barrancos"},
+                          {"Codigo": "0205", "Nome": "Beja"},
+                          {"Codigo": "0206", "Nome": "Castro Verde"},
+                          {"Codigo": "0207", "Nome": "Cuba"},
+                          {"Codigo": "0208", "Nome": "Ferreira do Alentejo"},
+                          {"Codigo": "0209", "Nome": "Mértola"},
+                          {"Codigo": "0210", "Nome": "Moura"},
+                          {"Codigo": "0212", "Nome": "Ourique"},
+                          {"Codigo": "0213", "Nome": "Serpa"},
+                          {"Codigo": "0214", "Nome": "Vidigueira"}
+                        ]
+                      },
+                      {
+                        "Codigo": "185",
+                        "Nome": "Lezíria do Tejo",
+                        "Municipios": [
+                          {"Codigo": "1103", "Nome": "Azambuja"},
+                          {"Codigo": "1403", "Nome": "Almeirim"},
+                          {"Codigo": "1404", "Nome": "Alpiarça"},
+                          {"Codigo": "1405", "Nome": "Benavente"},
+                          {"Codigo": "1406", "Nome": "Cartaxo"},
+                          {"Codigo": "1407", "Nome": "Chamusca"},
+                          {"Codigo": "1409", "Nome": "Coruche"},
+                          {"Codigo": "1412", "Nome": "Golegã"},
+                          {"Codigo": "1414", "Nome": "Rio Maior"},
+                          {"Codigo": "1415", "Nome": "Salvaterra de Magos"},
+                          {"Codigo": "1416", "Nome": "Santarém"}
+                        ]
+                      },
+                      {
+                        "Codigo": "186",
+                        "Nome": "Alto Alentejo",
+                        "Municipios": [
+                          {"Codigo": "1201", "Nome": "Alter do Chão"},
+                          {"Codigo": "1202", "Nome": "Arronches"},
+                          {"Codigo": "1203", "Nome": "Avis"},
+                          {"Codigo": "1204", "Nome": "Campo Maior"},
+                          {"Codigo": "1205", "Nome": "Castelo de Vide"},
+                          {"Codigo": "1206", "Nome": "Crato"},
+                          {"Codigo": "1207", "Nome": "Elvas"},
+                          {"Codigo": "1208", "Nome": "Fronteira"},
+                          {"Codigo": "1209", "Nome": "Gavião"},
+                          {"Codigo": "1210", "Nome": "Marvão"},
+                          {"Codigo": "1211", "Nome": "Monforte"},
+                          {"Codigo": "1212", "Nome": "Nisa"},
+                          {"Codigo": "1213", "Nome": "Ponte de Sor"},
+                          {"Codigo": "1214", "Nome": "Portalegre"},
+                          {"Codigo": "1215", "Nome": "Sousel"}
+                        ]
+                      },
+                      {
+                        "Codigo": "187",
+                        "Nome": "Alentejo Central",
+                        "Municipios": [
+                          {"Codigo": "0701", "Nome": "Alandroal"},
+                          {"Codigo": "0702", "Nome": "Arraiolos"},
+                          {"Codigo": "0703", "Nome": "Borba"},
+                          {"Codigo": "0704", "Nome": "Estremoz"},
+                          {"Codigo": "0705", "Nome": "Évora"},
+                          {"Codigo": "0706", "Nome": "Montemor-o-Novo"},
+                          {"Codigo": "0707", "Nome": "Mora"},
+                          {"Codigo": "0708", "Nome": "Mourão"},
+                          {"Codigo": "0709", "Nome": "Portel"},
+                          {"Codigo": "0710", "Nome": "Redondo"},
+                          {"Codigo": "0711", "Nome": "Reguengos de Monsaraz"},
+                          {"Codigo": "0712", "Nome": "Vendas Novas"},
+                          {"Codigo": "0713", "Nome": "Viana do Alentejo"},
+                          {"Codigo": "0714", "Nome": "Vila Viçosa"}
+                        ]
+                      }
+                    ]
+                },                  
+                {
+                    "Codigo": "15", 
+                    "Local": "Algarve", 
+                    "Regioes": [
+                        {
+                            "Codigo": "150",
+                            "Nome": "Algarve",
+                            "Municipios": [
+                                {"Codigo": "0801", "Nome": "Albufeira"},
+                                {"Codigo": "0802", "Nome": "Alcoutim"},
+                                {"Codigo": "0803", "Nome": "Aljezur"},
+                                {"Codigo": "0804", "Nome": "Castro Marim"},
+                                {"Codigo": "0805", "Nome": "Faro"},
+                                {"Codigo": "0806", "Nome": "Lagoa"},
+                                {"Codigo": "0807", "Nome": "Lagos"},
+                                {"Codigo": "0808", "Nome": "Loulé"},
+                                {"Codigo": "0809", "Nome": "Monchique"},
+                                {"Codigo": "0810", "Nome": "Olhão"},
+                                {"Codigo": "0811", "Nome": "Portimão"},
+                                {"Codigo": "0812", "Nome": "São Brás de Alportel"},
+                                {"Codigo": "0813", "Nome": "Silves"},
+                                {"Codigo": "0814", "Nome": "Tavira"},
+                                {"Codigo": "0815", "Nome": "Vila do Bispo"},
+                                {"Codigo": "0816", "Nome": "Vila Real de Santo António"}
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Codigo": "2", 
+            "Local": "Açores", 
+            "Zonas": [
+                {
+                    "Codigo": "20", 
+                    "Local": "Região Autónoma dos Açores", 
+                    "Regioes": [
+                        {
+                            "Codigo": "200",
+                            "Nome": "Região Autónoma dos Açores",
+                            "Municipios": [
+                              {"Codigo": "4301", "Nome": "Angra do Heroísmo"},
+                              {"Codigo": "4501", "Nome": "Calheta (R.A.A.)"},
+                              {"Codigo": "4901", "Nome": "Corvo"},
+                              {"Codigo": "4701", "Nome": "Horta"},
+                              {"Codigo": "4201", "Nome": "Lagoa (R.A.A.)"},
+                              {"Codigo": "4801", "Nome": "Lajes das Flores"},
+                              {"Codigo": "4601", "Nome": "Lajes do Pico"},
+                              {"Codigo": "4602", "Nome": "Madalena"},
+                              {"Codigo": "4202", "Nome": "Nordeste"},
+                              {"Codigo": "4203", "Nome": "Ponta Delgada"},
+                              {"Codigo": "4204", "Nome": "Povoação"},
+                              {"Codigo": "4205", "Nome": "Ribeira Grande"},
+                              {"Codigo": "4401", "Nome": "Santa Cruz da Graciosa"},
+                              {"Codigo": "4802", "Nome": "Santa Cruz das Flores"},
+                              {"Codigo": "4603", "Nome": "São Roque do Pico"},
+                              {"Codigo": "4502", "Nome": "Velas"},
+                              {"Codigo": "4302", "Nome": "Vila da Praia da Vitória"},
+                              {"Codigo": "4101", "Nome": "Vila do Porto"},
+                              {"Codigo": "4206", "Nome": "Vila Franca do Campo"}
+                            ]
+                        }                          
+                    ]
+                }
+            ]
+        },
+        {
+            "Codigo": "3", 
+            "Local": "Madeira", 
+            "Zonas": [
+              {
+                "Codigo": "300", 
+                "Nome": "Região Autónoma da Madeira", 
+                "Municipios": [
+                  {"Codigo": "3101", "Nome": "Calheta (R.A.M.)"},
+                  {"Codigo": "3102", "Nome": "Câmara de Lobos"},
+                  {"Codigo": "3103", "Nome": "Funchal"},
+                  {"Codigo": "3104", "Nome": "Machico"},
+                  {"Codigo": "3105", "Nome": "Ponta do Sol"},
+                  {"Codigo": "3106", "Nome": "Porto Moniz"},
+                  {"Codigo": "3201", "Nome": "Porto Santo"},
+                  {"Codigo": "3107", "Nome": "Ribeira Brava"},
+                  {"Codigo": "3108", "Nome": "Santa Cruz"},
+                  {"Codigo": "3109", "Nome": "Santana"},
+                  {"Codigo": "3110", "Nome": "São Vicente"}
+                ]
+              }
+            ]
+        }
+    ]
+}
