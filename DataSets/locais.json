@@ -10,8 +10,6 @@
                     "Codigo": "11", 
                     "Local": "Norte", 
                     "Regioes": [
-                        {
-                            "regions": [
                               {
                                 "Codigo": "111",
                                 "Nome": "Alto Minho",
@@ -147,9 +145,6 @@
                                 ]
                               }
                             ]
-                          }
-                          
-                    ]
                 },
                 {
                     "Codigo": "16", 
@@ -499,24 +494,29 @@
         {
             "Codigo": "3", 
             "Local": "Madeira", 
-            "Zonas": [
-              {
-                "Codigo": "300", 
-                "Nome": "Região Autónoma da Madeira", 
-                "Municipios": [
-                  {"Codigo": "3101", "Nome": "Calheta (R.A.M.)"},
-                  {"Codigo": "3102", "Nome": "Câmara de Lobos"},
-                  {"Codigo": "3103", "Nome": "Funchal"},
-                  {"Codigo": "3104", "Nome": "Machico"},
-                  {"Codigo": "3105", "Nome": "Ponta do Sol"},
-                  {"Codigo": "3106", "Nome": "Porto Moniz"},
-                  {"Codigo": "3201", "Nome": "Porto Santo"},
-                  {"Codigo": "3107", "Nome": "Ribeira Brava"},
-                  {"Codigo": "3108", "Nome": "Santa Cruz"},
-                  {"Codigo": "3109", "Nome": "Santana"},
-                  {"Codigo": "3110", "Nome": "São Vicente"}
-                ]
-              }
+            "Zonas": [{
+              "Codigo": "30", 
+              "Local": "Região Autónoma da Madeira", 
+              "Regioes": [
+                {
+                  "Codigo": "300", 
+                  "Nome": "Região Autónoma da Madeira", 
+                  "Municipios": [
+                    {"Codigo": "3101", "Nome": "Calheta (R.A.M.)"},
+                    {"Codigo": "3102", "Nome": "Câmara de Lobos"},
+                    {"Codigo": "3103", "Nome": "Funchal"},
+                    {"Codigo": "3104", "Nome": "Machico"},
+                    {"Codigo": "3105", "Nome": "Ponta do Sol"},
+                    {"Codigo": "3106", "Nome": "Porto Moniz"},
+                    {"Codigo": "3201", "Nome": "Porto Santo"},
+                    {"Codigo": "3107", "Nome": "Ribeira Brava"},
+                    {"Codigo": "3108", "Nome": "Santa Cruz"},
+                    {"Codigo": "3109", "Nome": "Santana"},
+                    {"Codigo": "3110", "Nome": "São Vicente"}
+                  ]
+                }
+              ]
+            }
             ]
         }
     ]

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualização Interativa D3 de Locais</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .map {
+            stroke: #555;
+            stroke-width: 0.5px;
+            fill: #ccc;
+        }
+        .highlight {
+            fill: orange;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 5px;
+            font-size: 12px;
+            pointer-events: none;
+            display: none;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mapa Interativo de Portugal com D3</h1>
+    <div class="controls">
+        <label for="zona-select">Escolha a Zona:</label>
+        <select id="zona-select">
+            <option value="">Selecione uma zona</option>
+        </select>
+        <label for="regiao-select">Escolha a Região:</label>
+        <select id="regiao-select" disabled>
+            <option value="">Selecione uma região</option>
+        </select>
+    </div>
+    <div id="visualization"></div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        const width = 800;
+        const height = 600;
+
+        const svg = d3.select("#visualization")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const tooltip = d3.select("#tooltip");
+
+        // Carregar os dados do ficheiro locais.json
+        d3.json("./DataSets/locais.json").then(locaisData => {
+            const zonas = [].concat(...locaisData.Partes.map(parte => parte.Zonas || []));
+
+            // Popular o dropdown de zonas
+            const zonaSelect = d3.select("#zona-select");
+            zonas.forEach(zona => {
+                zonaSelect.append("option")
+                    .attr("value", zona.Codigo)
+                    .text(zona.Local);
+            });
+
+            const regiaoSelect = d3.select("#regiao-select");
+
+            function updateVisualization(level, data) {
+                svg.selectAll(".map").remove();
+
+                svg.selectAll(".map")
+                    .data(data)
+                    .enter()
+                    .append("text")
+                    .attr("x", (d, i) => (i % 5) * 150 + 50)
+                    .attr("y", (d, i) => Math.floor(i / 5) * 30 + 50)
+                    .text(d => `${d.Nome || d.Local} (${d.Codigo})`)
+                    .attr("class", "map");
+            }
+
+            zonaSelect.on("change", function () {
+                const selectedZona = zonas.find(z => z.Codigo === this.value);
+
+                if (selectedZona) {
+                    const regioes = selectedZona.Regioes || [];
+                    regiaoSelect.selectAll("option:not(:first-child)").remove();
+                    regiaoSelect.property("disabled", regioes.length === 0);
+
+                    regioes.forEach(regiao => {
+                        regiaoSelect.append("option")
+                            .attr("value", regiao.Codigo)
+                            .text(regiao.Nome);
+                    });
+
+                    updateVisualization("regioes", regioes);
+                } else {
+                    regiaoSelect.property("disabled", true);
+                    updateVisualization("zonas", zonas);
+                }
+            });
+
+            regiaoSelect.on("change", function () {
+                const selectedZona = zonas.find(z => z.Codigo === zonaSelect.property("value"));
+                const selectedRegiao = selectedZona?.Regioes.find(r => r.Codigo === this.value);
+
+                if (selectedRegiao) {
+                    const municipios = selectedRegiao.Municipios || [];
+                    updateVisualization("municipios", municipios);
+                }
+            });
+
+            // Inicializar com todas as zonas
+            updateVisualization("zonas", zonas);
+        }).catch(error => {
+            console.error("Erro ao carregar os dados:", error);
+            alert("Erro ao carregar os dados. Verifique se os arquivos estão acessíveis.");
+        });
+    </script>
+</body>
+</html>
