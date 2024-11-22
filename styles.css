@@ -75,3 +75,65 @@ svg {
     width: 100%;
     height: auto;
 }
+
+
+.local-item {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.local-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.local-item.active {
+    border: 2px solid #007bff;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+
+
+#filter-options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Espaçamento entre os botões */
+    margin-bottom: 1rem;
+}
+
+#filter-options label {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: 2px solid #ccc; /* Borda cinza inicial */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    background-color: white;
+}
+
+#filter-options input[type="radio"] {
+    display: none; /* Esconde os inputs */
+}
+
+#filter-options input[type="radio"]:checked + label {
+    border: 2px solid #007bff; /* Borda azul ao selecionar */
+    transform: translateY(-2px); /* Elevação ao selecionar */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2); /* Sombra ao selecionar */
+    color: #007bff; /* Texto azul ao selecionar */
+    background-color: white; /* Fundo branco */
+}
+
+#filter-options label:hover {
+    transform: translateY(-2px); /* Elevação leve ao passar o mouse */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    border-color: #007bff; /* Borda azul ao passar o mouse */
+}

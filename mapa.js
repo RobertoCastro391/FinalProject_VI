@@ -88,29 +88,36 @@ d3.json("./DataSets/locais.json").then(locaisData => {
     });
 
     function drawLocais(locais) {
-        const locaisContainer = d3.select("#locais-list");
-        locaisContainer.html(""); // Limpa os locais existentes
-
+        const locaisContainer = d3.select("#locais-container");
+        locaisContainer.html(""); // Limpa os cartões existentes
+    
         locais.forEach(local => {
-            locaisContainer.append("div")
-                .attr("class", "local-item")
+            const card = locaisContainer.append("div")
+                .attr("class", "card mb-3 local-item")
                 .attr("data-codigo", local.Codigo)
-                .text(local.Local || local.Nome)
                 .on("click", function () {
                     const codigo = d3.select(this).attr("data-codigo");
                     const ano = document.getElementById("ano-select").value;
-
+    
                     // Define o local ativo
                     d3.selectAll(".local-item").classed("active", false);
                     d3.select(this).classed("active", true);
-
+    
                     if (codigo && ano) {
                         loadPopulationData(codigo, ano); // Atualiza os dados
                     }
                 });
+    
+            // Apenas preenche o título do cartão
+            card.append("div")
+                .attr("class", "card-body")
+                .append("h5")
+                .attr("class", "card-title")
+                .text(local.Local || local.Nome);
         });
     }
-
+    
+    
     drawLocais(partes);
 }).catch(error => {
     console.error("Erro ao carregar os dados:", error);
