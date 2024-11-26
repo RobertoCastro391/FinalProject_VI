@@ -137,3 +137,26 @@ svg {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
     border-color: #007bff; /* Borda azul ao passar o mouse */
 }
+
+#population-pyramid {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#filters-education {
+    display: block;
+    margin-top: 10px;
+}
+
+#gender-filters, #education-filters {
+    margin-bottom: 15px;
+}
+
+#gender-filters label, #education-filters label {
+    display: block;
+    margin: 5px 0;
+}
+

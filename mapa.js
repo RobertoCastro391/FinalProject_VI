@@ -1,12 +1,12 @@
 import { createCharts } from './charts.js';
 
-// Variável para armazenar o filtro atual
 let currentFilter = "populacao"; // Filtro padrão
 
 // Listener para capturar mudanças no filtro selecionado
 document.querySelectorAll(".data-filter").forEach(filter => {
     filter.addEventListener("change", function () {
         currentFilter = this.value; // Atualiza o filtro atual
+
         const codigo = document.querySelector(".local-item.active")?.getAttribute("data-codigo");
         const ano = document.getElementById("ano-select").value;
         if (codigo && ano) {
@@ -129,25 +129,22 @@ d3.json("./DataSets/locais.json").then(locaisData => {
 function loadPopulationData(codigo, ano) {
     // Define o diretório correto para cada filtro
     let directory = "População";
-    let file="população_residente";
+    let file = "população_residente";
     if (currentFilter === "escolaridade") {
         directory = "Escolaridade";
-        file="nivel_de_escolaridade";
+        file = "nivel_de_escolaridade";
     } else if (currentFilter === "desemprego") {
         directory = "Desemprego";
-        file="desempregados";
+        file = "desempregados";
     }
 
-    // Caminho do arquivo CSV baseado no filtro e ano
     const csvFile = `./DataSets/${directory}/${file}_${ano}.csv`;
-
-    console.log(`Carregando dados do arquivo: ${csvFile}`); // Log para debug
 
     d3.dsv(";", csvFile).then(data => {
         const selectedData = data.find(row => row["Codigo"] === codigo);
 
         if (selectedData) {
-            createCharts(selectedData); // Atualiza os gráficos com os dados
+            createCharts(selectedData, currentFilter); // Atualiza os gráficos
         } else {
             document.getElementById('visualization').innerHTML = '<p>Nenhum dado encontrado para o código informado.</p>';
         }
