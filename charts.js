@@ -1,3 +1,5 @@
+let currentChartData = null;
+
 document.querySelectorAll(".data-filter").forEach(filter => {
     filter.addEventListener("change", () => {
         const selectedFilter = document.querySelector(".data-filter:checked").value;
@@ -17,20 +19,32 @@ document.querySelectorAll(".data-filter").forEach(filter => {
 
 
 export function createCharts(data, currentFilter) {
+    currentChartData = data;
     const { selectedGenders, selectedEducationLevels } = getSelectedFilters();
 
     console.log("Filtro atual:", currentFilter);
     console.log("Gêneros selecionados:", selectedGenders);
     console.log("Graus de ensino selecionados:", selectedEducationLevels);
-
     console.log("Dados:", data);
 
 
     if (currentFilter === "escolaridade") {
-        const filteredData = prepareEducationAndGenderFilteredData(data, selectedGenders, selectedEducationLevels);
+        
+        // const donutData = [
+        //     { label: "Homens", value: +currentChartData["H"] },
+        //     { label: "Mulheres", value: +currentChartData["M"] }
+        // ];
+        // createDonutChart(donutData, "#chart-donut");
 
+        const filteredData = prepareEducationAndGenderFilteredData(data, selectedGenders, selectedEducationLevels);
+        const filteredData2 = prepareEducationStackedData(data, selectedEducationLevels);
+        
         d3.select("#chart-bar").html("");
-        createCombinedEducationGenderChart(filteredData, "#chart-bar");
+        createGroupedEducationGenderChart(filteredData, "#chart-bar");
+        
+        d3.select("#chart-stacked-bar").html("");
+        createStackedBarChart(filteredData2, "#chart-stacked-bar");
+        
         return; // Finaliza aqui para evitar renderizar outros gráficos
     }
 
@@ -67,7 +81,7 @@ export function createCharts(data, currentFilter) {
 
 
 function createBarChart(data, selector) {
-    const margin = { top: 20, right: 30, bottom: 50, left: 50 };
+    const margin = { top: 40, right: 30, bottom: 50, left: 70 };
     const width = 400 - margin.left - margin.right;
     const height = 300 - margin.top - margin.bottom;
     const svg = d3.select(selector)
@@ -132,7 +146,7 @@ function createBarChart(data, selector) {
     // Rótulo do Eixo Y
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left)
+        .attr("y", - margin.left)
         .attr("x", 0 - height / 2)
         .attr("dy", "1em")
         .style("text-anchor", "middle")
@@ -400,11 +414,11 @@ export function createPopulationPyramid(data) {
 }
 
 
-function createCombinedEducationGenderChart(data, selector) {
-    const margin = { top: 20, right: 30, bottom: 50, left: 50 };
+function createGroupedEducationGenderChart(data, selector) {
+    const margin = { top: 40, right: 30, bottom: 50, left: 70 };
     const width = 400 - margin.left - margin.right;
     const height = 300 - margin.top - margin.bottom;
-
+    
     const svg = d3.select(selector)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -412,18 +426,27 @@ function createCombinedEducationGenderChart(data, selector) {
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Escalas
-    const x = d3.scaleBand()
-        .domain(data.map(d => d.faixa)) // Faixas etárias no eixo X
+    // X and Y scales
+    const x0 = d3.scaleBand()
+        .domain(data.map(d => d.faixa)) // Main groups (age ranges)
         .range([0, width])
-        .padding(0.1);
+        .padding(0.2);
+
+    const x1 = d3.scaleBand()
+        .domain(data[0].values.map(d => d.group)) // Subgroups (gender + education)
+        .range([0, x0.bandwidth()])
+        .padding(0.05);
 
     const y = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.total)]) // Total no eixo Y
+        .domain([0, d3.max(data, d => d3.max(d.values, v => v.value))]) // Max value across groups
         .nice()
         .range([height, 0]);
 
-    // Tooltip para exibir valores ao passar o mouse
+    const color = d3.scaleOrdinal()
+        .domain(data[0].values.map(d => d.group)) // Subgroup names
+        .range(d3.schemeSet2); // Use a color scheme
+
+    // Tooltip
     const tooltip = d3.select("body")
         .append("div")
         .style("position", "absolute")
@@ -435,52 +458,120 @@ function createCombinedEducationGenderChart(data, selector) {
         .style("pointer-events", "none")
         .style("display", "none");
 
-    // Renderizar as barras
-    svg.selectAll(".bar")
+    // Render bars
+    svg.append("g")
+        .selectAll(".age-group")
         .data(data)
+        .enter()
+        .append("g")
+        .attr("class", "age-group")
+        .attr("transform", d => `translate(${x0(d.faixa)}, 0)`)
+        .selectAll(".bar")
+        .data(d => d.values)
         .enter()
         .append("rect")
         .attr("class", "bar")
-        .attr("x", d => x(d.faixa))
-        .attr("y", d => y(d.total))
-        .attr("width", x.bandwidth())
-        .attr("height", d => height - y(d.total))
-        .attr("fill", "#66b3ff")
+        .attr("x", d => x1(d.group))
+        .attr("y", d => y(d.value))
+        .attr("width", x1.bandwidth())
+        .attr("height", d => height - y(d.value))
+        .attr("fill", d => color(d.group))
         .on("mouseover", function (event, d) {
-            d3.select(this).attr("fill", "#3385cc"); // Destaca a barra
             tooltip.style("display", "block")
-                .html(`<strong>${d.faixa}</strong><br>Total: ${d.total.toLocaleString()}`);
+                .html(`<strong>${d.group}</strong><br>Valor: ${d.value}`);
         })
         .on("mousemove", function (event) {
-            tooltip.style("left", event.pageX + 10 + "px")
-                .style("top", event.pageY - 20 + "px");
+            tooltip.style("left", `${event.pageX + 10}px`)
+                .style("top", `${event.pageY - 20}px`);
         })
         .on("mouseout", function () {
-            d3.select(this).attr("fill", "#66b3ff"); // Restaura a cor
             tooltip.style("display", "none");
         });
 
-    // Eixo X
+    // X-axis
     svg.append("g")
         .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-        .attr("transform", "rotate(-45)")
-        .style("text-anchor", "end");
+        .call(d3.axisBottom(x0));
 
-    // Eixo Y
+    // Y-axis
     svg.append("g").call(d3.axisLeft(y));
 
-    // Título do gráfico
+    // Chart title
     svg.append("text")
         .attr("x", width / 2)
         .attr("y", -10)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .text("Distribuição por Faixa Etária");
-        
+        .text("Distribuição por Gênero e Escolaridade");
 }
 
+// Make checkboxes mutually exclusive but ensure at least one remains selected
+function makeCheckboxesExclusive(containerId) {
+    const checkboxes = document.querySelectorAll(`#${containerId} input[type="checkbox"]`);
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", () => {
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+            if (checkbox.checked) {
+                // Uncheck all other checkboxes in the group
+                checkboxes.forEach(other => {
+                    if (other !== checkbox) {
+                        other.checked = false;
+                    }
+                });
+            } else if (checkedCount === 0) {
+                // Prevent the last checkbox from being deselected
+                checkbox.checked = true;
+            }
+
+            // Trigger filter update if needed
+            updateChartsWithFilters(isStackChart);
+        });
+    });
+}
+
+function makeCheckboxesMultiple(containerId) {
+    const checkboxes = document.querySelectorAll(`#${containerId} input[type="checkbox"]`);
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", () => {
+            // Trigger filter update when any checkbox is changed
+            updateChartsWithFilters();
+        });
+    });
+}
+
+// Attach the mutual exclusivity behavior to each filter group
+makeCheckboxesMultiple("gender-filters");
+makeCheckboxesExclusive("education-filters");
+
+// Function to update charts dynamically
+function updateChartsWithFilters(isStackChart = false) {
+    const { selectedGenders, selectedEducationLevels } = getSelectedFilters();
+
+    // Prepare filtered data
+    const filteredData = prepareEducationAndGenderFilteredData(currentChartData, selectedGenders, selectedEducationLevels);
+
+    // Clear existing chart
+    d3.select("#chart-bar").html("");
+
+    // Re-render the chart with filtered data
+    createGroupedEducationGenderChart(filteredData, "#chart-bar");
+
+
+    if (isStackChart) {
+        console.log("Entrei aqui")
+        console.log(selectedEducationLevels)
+        const filteredData = prepareEducationStackedData(currentChartData, selectedEducationLevels);
+        // Clear existing chart
+        d3.select("#chart-stacked-bar").html("");
+
+        // Re-render the chart with filtered data
+        createStackedBarChart(filteredData, "#chart-stacked-bar");
+    };
+    
+}
 
 
 function getSelectedFilters() {
@@ -492,8 +583,6 @@ function getSelectedFilters() {
 
     return { selectedGenders, selectedEducationLevels };
 }
-
-
 
 
 function prepareEducationAndGenderFilteredData(data, selectedGenders, selectedEducationLevels, includeAgeRanges = true) {
@@ -515,13 +604,67 @@ function prepareEducationAndGenderFilteredData(data, selectedGenders, selectedEd
     }
 
     return ageRanges.map(age => {
-        let total = 0;
-        selectedEducationLevels.forEach(level => {
-            selectedGenders.forEach(gender => {
+        const values = [];
+        selectedGenders.forEach(gender => {
+            selectedEducationLevels.forEach(level => {
                 const key = `${gender}-${age}-${level}`;
-                total += +data[key] || 0;
+                const value = +data[key] || 0;
+                values.push({
+                    group: `${gender}-${level}`, // Combine gender and education level
+                    value
+                });
             });
         });
-        return { faixa: age, total };
+
+        console.log({ faixa: age, values });
+
+        return { faixa: age, values }; // Grouped by age range
+    });
+}
+
+function prepareEducationStackedData(data, selectedEducationLevels, includeAgeRanges = true) {
+    
+    const ageRanges = [
+        "0:14", "15:19", "20:24", "25:29", "30:34",
+        "35:39", "40:44", "45:49", "50:54", "55:59",
+        "60:64", "65:69", "70:74", "75+"
+    ];
+
+    const genders = ["H", "M"];
+
+    if (!includeAgeRanges) {
+        // Aggregate data across all age ranges
+        let homens = 0;
+        let mulheres = 0;
+        selectedEducationLevels.forEach(level => {
+            genders.forEach(gender => {
+                ageRanges.forEach(age => {
+                    const key = `${gender}-${age}-${level}`;
+                    if (gender === "H") {
+                        homens += +data[key] || 0;
+                    } else if (gender === "M") {
+                        mulheres += +data[key] || 0;
+                    }
+                });
+            });
+        });
+        return [{ faixa: "Total", homens, mulheres }];
+    }
+
+    // Aggregate data for each age range
+    return ageRanges.map(age => {
+        let homens = 0;
+        let mulheres = 0;
+        selectedEducationLevels.forEach(level => {
+            genders.forEach(gender => {
+                const key = `${gender}-${age}-${level}`;
+                if (gender === "H") {
+                    homens += +data[key] || 0;
+                } else if (gender === "M") {
+                    mulheres += +data[key] || 0;
+                }
+            });
+        });
+        return { faixa: age, homens, mulheres };
     });
 }
