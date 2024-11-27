@@ -1,8 +1,8 @@
 import { createCharts } from './charts.js';
 
-let currentFilter = "populacao"; // Filtro padrão
+let currentFilter = "populacao"; 
 
-// Listener para capturar mudanças no filtro selecionado
+// Carrega os anos disponíveis e configura o comportamento da seleção
 document.querySelectorAll(".data-filter").forEach(filter => {
     filter.addEventListener("change", function () {
         currentFilter = this.value; // Atualiza o filtro atual
@@ -124,7 +124,6 @@ d3.json("./DataSets/locais.json").then(locaisData => {
     alert("Erro ao carregar os dados. Verifique se os arquivos estão acessíveis.");
 });
 
-// Função para carregar os dados e atualizar os gráficos
 // Função para carregar os dados e atualizar os gráficos
 function loadPopulationData(codigo, ano) {
     // Define o diretório correto para cada filtro
