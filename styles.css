@@ -6,6 +6,23 @@ body {
     text-align: center;
 }
 
+h1 {
+    font-family: 'Poppins', sans-serif; /* Fonte moderna */
+    font-size: 2.5rem; /* Tamanho grande */
+    font-weight: 700; /* Negrito */
+    text-transform: uppercase; /* Letras maiúsculas */
+    color: #007bff; /* Azul moderno */
+    background: linear-gradient(135deg, #007bff, #00c6ff); /* Gradiente no texto */
+    -webkit-background-clip: text; /* Apenas o texto recebe o gradiente */
+    -webkit-text-fill-color: transparent; /* Faz o gradiente aparecer */
+    text-align: center; /* Centraliza o texto */
+    margin-bottom: 20px; /* Espaço abaixo do título */
+    letter-spacing: 2px; /* Espaçamento entre as letras */
+    text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: transform 0.3s ease-in-out; /* Transição suave */
+}
+
+
 .map-container {
     position: relative;
     width: 100%;
@@ -160,3 +177,6 @@ svg {
     margin: 5px 0;
 }
 
+.form-label {
+    font-weight: bold;
+}
