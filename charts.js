@@ -16,8 +16,6 @@ document.querySelectorAll(".data-filter").forEach(filter => {
     });
 });
 
-
-
 export function createCharts(data, currentFilter) {
     currentChartData = data;
     const { selectedGenders, selectedEducationLevels } = getSelectedFilters();
@@ -30,20 +28,18 @@ export function createCharts(data, currentFilter) {
 
     if (currentFilter === "escolaridade") {
         
-        // const donutData = [
-        //     { label: "Homens", value: +currentChartData["H"] },
-        //     { label: "Mulheres", value: +currentChartData["M"] }
-        // ];
-        // createDonutChart(donutData, "#chart-donut");
-
         const filteredData = prepareEducationAndGenderFilteredData(data, selectedGenders, selectedEducationLevels);
         const filteredData2 = prepareEducationStackedData(data, selectedEducationLevels);
+        const filteredData3 = prepareEducationPieChart(data, selectedEducationLevels);
         
         d3.select("#chart-bar").html("");
         createGroupedEducationGenderChart(filteredData, "#chart-bar");
         
         d3.select("#chart-stacked-bar").html("");
         createStackedBarChart(filteredData2, "#chart-stacked-bar");
+
+        d3.select("#chart-donut").html("");
+        createDonutChart(filteredData3, "#chart-donut");
         
         return; // Finaliza aqui para evitar renderizar outros gráficos
     }
@@ -72,6 +68,7 @@ export function createCharts(data, currentFilter) {
     d3.select("#chart-donut").html("");
     d3.select("#chart-stacked-bar").html("");
     d3.select("#pyramid-svg").html("");
+    d3.select("#top-graphic").html("");
 
     createBarChart(barData, "#chart-bar");
     createDonutChart(donutData, "#chart-donut");
@@ -81,24 +78,29 @@ export function createCharts(data, currentFilter) {
 
 
 function createBarChart(data, selector) {
-    const margin = { top: 40, right: 30, bottom: 50, left: 70 };
+
+    const margin = { top: 20, right: 30, bottom: 50, left: 80 }; // Ajuste no left para espaço das legendas
     const width = 400 - margin.left - margin.right;
     const height = 300 - margin.top - margin.bottom;
+
     const svg = d3.select(selector)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
+
     const x = d3.scaleBand()
         .domain(data.map(d => d.faixa))
         .range([0, width])
         .padding(0.1);
+
     const y = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.total)])
         .nice()
         .range([height, 0]);
-    // Tooltip para exibir valores ao passar o mouse
+
+    // Tooltip to display values on hover
     const tooltip = d3.select("body")
         .append("div")
         .style("position", "absolute")
@@ -109,6 +111,7 @@ function createBarChart(data, selector) {
         .style("box-shadow", "0px 0px 10px rgba(0,0,0,0.1)")
         .style("pointer-events", "none")
         .style("display", "none");
+
     svg.append("g")
         .selectAll(".bar")
         .data(data)
@@ -121,7 +124,7 @@ function createBarChart(data, selector) {
         .attr("height", d => height - y(d.total))
         .attr("fill", "#66b3ff")
         .on("mouseover", function (event, d) {
-            d3.select(this).attr("fill", "#3385cc"); // Destaca a barra
+            d3.select(this).attr("fill", "#3385cc");
             tooltip.style("display", "block")
                 .html(`<strong>${d.faixa}</strong><br>Total: ${d.total.toLocaleString()}`);
         })
@@ -130,39 +133,79 @@ function createBarChart(data, selector) {
                 .style("top", event.pageY - 20 + "px");
         })
         .on("mouseout", function () {
-            d3.select(this).attr("fill", "#66b3ff"); // Restaura a cor
+            d3.select(this).attr("fill", "#66b3ff");
             tooltip.style("display", "none");
         });
-    // Eixo X
+
+    // Add X-axis
     svg.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x))
         .selectAll("text")
-        .attr("transform", "rotate(-45)")
-        .style("text-anchor", "end");
-    // Eixo Y
-    svg.append("g")
-        .call(d3.axisLeft(y));
-    // Rótulo do Eixo Y
+        .attr("transform", "rotate(-90)") // Rotate labels -90 degrees
+        .attr("x", -10) // Adjust x position slightly for alignment
+        .attr("y", -4) // Keep y position as 0
+        .style("text-anchor", "end") // Align text at the end for readability
+        .style("font-size", "10px"); // Optional: adjust font size for readability
+
+    // Add X-axis label
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom + 5)
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .text("Faixa Etária");
+
+    // Add Y-axis
+    svg.append("g").call(d3.axisLeft(y));
+
+    // Add Y-axis label
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", - margin.left)
+        .attr("y", -margin.left - 3)
         .attr("x", 0 - height / 2)
         .attr("dy", "1em")
         .style("text-anchor", "middle")
+        .style("font-size", "14px")
         .text("População Total");
-    // Título do Gráfico
+
+    // Add chart title
     svg.append("text")
         .attr("x", width / 2)
-        .attr("y", 0 - margin.top / 2)
+        .attr("y", 0 - margin.top / 2 + 3)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .style("text-decoration", "underline")
         .text("Distribuição por Faixa Etária");
+    
+    // Add Legend
+    const legendData = [
+        { label: "Total - HM", color: "#66b3ff" }
+    ];
+
+    const legend = svg.append("g")
+        .attr("transform", `translate(${width - 50}, ${height - 220})`); // Position legend below chart
+
+    legendData.forEach((d, i) => {
+        const legendRow = legend.append("g")
+            .attr("transform", `translate(0, ${i * 20})`);
+
+        legendRow.append("rect")
+            .attr("width", 12)
+            .attr("height", 12)
+            .attr("fill", d.color);
+
+        legendRow.append("text")
+            .attr("x", 20)
+            .attr("y", 10)
+            .attr("font-size", "12px")
+            .attr("text-anchor", "start")
+            .text(d.label);
+    });
 }
 
+
 function createDonutChart(data, selector) {
-    const width = 300; // Mantém o donut centralizado
+    const width = 400; // Increased width to make space for the legend
     const height = 300;
     const radius = Math.min(width, height) / 2;
 
@@ -171,7 +214,7 @@ function createDonutChart(data, selector) {
         .attr("viewBox", `0 0 ${width} ${height}`)
         .attr("preserveAspectRatio", "xMidYMid meet")
         .append("g")
-        .attr("transform", `translate(${width / 2}, ${height / 2})`);
+        .attr("transform", `translate(${radius}, ${height / 2})`);
 
     const color = d3.scaleOrdinal()
         .domain(data.map(d => d.label))
@@ -182,7 +225,7 @@ function createDonutChart(data, selector) {
 
     const hoverArc = d3.arc().innerRadius(radius - 70).outerRadius(radius + 10);
 
-    const totalPessoas = data.reduce((sum, d) => sum + d.value, 0); // Soma total
+    const totalPessoas = data.reduce((sum, d) => sum + d.value, 0);
 
     const tooltip = d3.select("body")
         .append("div")
@@ -206,7 +249,7 @@ function createDonutChart(data, selector) {
             tooltip.style("display", "block")
                 .html(
                     `<strong>${d.data.label}</strong><br>` +
-                    `Total: ${d.data.value.toLocaleString()}<br>`
+                    `Total: ${d.data.value.toLocaleString()}`
                 );
         })
         .on("mousemove", function (event) {
@@ -229,12 +272,41 @@ function createDonutChart(data, selector) {
         .attr("font-size", "12px")
         .attr("y", 20)
         .text(`Total: ${totalPessoas.toLocaleString()}`);
+
+    // Add a legend
+    const legendData = [
+        { label: "Homens", color: "#4682b4" },
+        { label: "Mulheres", color: "#ff7f50" }
+    ];
+
+    console.log("Legend data:", legendData); // Debugging: Ensure data is correct
+
+    const legend = svg.append("g")
+        .attr("transform", `translate(${radius + 10}, ${-radius})`); // Position the legend
+
+    legendData.forEach((d, i) => {
+        const legendRow = legend.append("g")
+            .attr("transform", `translate(0, ${i * 20})`);
+
+        legendRow.append("rect")
+            .attr("width", 12)
+            .attr("height", 12)
+            .attr("fill", d.color);
+
+        legendRow.append("text")
+            .attr("x", 18)
+            .attr("y", 10)
+            .attr("font-size", "12px")
+            .attr("text-anchor", "start")
+            .text(d.label);
+    });
 }
 
+
 function createStackedBarChart(data, selector) {
-    const margin = { top: 20, right: 30, bottom: 50, left: 50 };
-    const width = 400; // Altere para melhorar
-    const height = 300;
+    const margin = { top: 20, right: 30, bottom: 50, left: 80 }; // Ajuste no left para espaço das legendas
+    const width = 400 - margin.left - margin.right;
+    const height = 300 - margin.top - margin.bottom;
 
     const svg = d3.select(selector)
         .append("svg")
@@ -302,20 +374,77 @@ function createStackedBarChart(data, selector) {
             tooltip.style("display", "none");
         });
 
+    // Add X-axis
     svg.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x))
         .selectAll("text")
-        .attr("transform", "rotate(-45)")
-        .style("text-anchor", "end");
+        .attr("transform", "rotate(-90)") // Rotate labels -90 degrees
+        .attr("x", -10) // Adjust x position slightly for alignment
+        .attr("y", -4) // Keep y position as 0
+        .style("text-anchor", "end") // Align text at the end for readability
+        .style("font-size", "10px"); // Optional: adjust font size for readability
+        
+    // Add X-axis label
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 12)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Faixa Etária");
 
+    // Add y-axis
     svg.append("g").call(d3.axisLeft(y));
+
+    // Add y-axis label
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 10 - margin.left)
+        .attr("x", 0 - height / 2)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("População Total");
+
+    // Add chart title
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", -8)
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .text("Distribuição por Gênero e Faixa Etária");
+
+    // Add legend
+    const legendData = [
+        { label: "Homens", color: "#4682b4" },
+        { label: "Mulheres", color: "#ff7f50" }
+    ];
+
+    const legend = svg.append("g")
+        .attr("transform", `translate(${width - 40}, 6)`); // Position the legend to the right
+
+    legendData.forEach((d, i) => {
+        const legendRow = legend.append("g")
+            .attr("transform", `translate(0, ${i * 20})`); // Space out legend rows
+
+        legendRow.append("rect")
+            .attr("width", 12)
+            .attr("height", 12)
+            .attr("fill", d.color);
+
+        legendRow.append("text")
+            .attr("x", 18)
+            .attr("y", 10)
+            .attr("font-size", "12px")
+            .attr("text-anchor", "start")
+            .text(d.label);
+    });
 }
+
 
 export function createPopulationPyramid(data) {
     const margin = { top: 20, right: 30, bottom: 50, left: 80 }; // Ajuste no left para espaço das legendas
-    const width = 500 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+    const width = 400 - margin.left - margin.right;
+    const height = 300 - margin.top - margin.bottom;
 
     // Seleciona o contêiner e limpa seu conteúdo
     const container = d3.select("#pyramid-svg");
@@ -350,6 +479,24 @@ export function createPopulationPyramid(data) {
         .style("text-anchor", "middle") // Centraliza horizontalmente
         .attr("transform", `translate(-30,0)`); // Move o texto para o meio do gráfico
 
+    // label para o eixo y
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x", 0 - height / 2)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "14px") // Define o tamanho da fonte
+        .text("Faixa Etária");
+
+    // label para o eixo x
+    svg.append("text")
+        .attr("x", width / 2) // Centraliza no meio do eixo
+        .attr("y", height + margin.bottom - 10) // Posiciona abaixo do eixo X
+        .style("text-anchor", "middle") // Centraliza o texto
+        .style("font-size", "14px") // Define o tamanho da fonte
+        .text("População Total");
+
     svg.append("g")
         .attr("transform", `translate(0,${height})`)
         .call(d3.axisBottom(x).ticks(5).tickFormat(d => Math.abs(d)));
@@ -381,7 +528,7 @@ export function createPopulationPyramid(data) {
     // Adiciona título ao gráfico
     svg.append("text")
         .attr("x", width / 2)
-        .attr("y", -10)
+        .attr("y", -5)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .text("Pirâmide Populacional");
@@ -411,14 +558,39 @@ export function createPopulationPyramid(data) {
             d3.select(this).attr("opacity", 1);
             tooltip.style("display", "none");
         });
+    // Add legend
+    const legendData = [
+        { label: "Homens", color: "#4682b4" },
+        { label: "Mulheres", color: "#ff7f50" }
+    ];
+
+    const legend = svg.append("g")
+        .attr("transform", `translate(${width -3}, 0)`); // Position the legend to the right
+
+    legendData.forEach((d, i) => {
+        const legendRow = legend.append("g")
+            .attr("transform", `translate(0, ${i * 20})`); // Space out legend rows
+
+        legendRow.append("rect")
+            .attr("width", 12)
+            .attr("height", 12)
+            .attr("fill", d.color);
+
+        legendRow.append("text")
+            .attr("x", 18)
+            .attr("y", 10)
+            .attr("font-size", "12px")
+            .attr("text-anchor", "start")
+            .text(d.label);
+    });
 }
 
 
 function createGroupedEducationGenderChart(data, selector) {
-    const margin = { top: 40, right: 30, bottom: 50, left: 70 };
+    const margin = { top: 40, right: 100, bottom: 80, left: 70 }; // Increased right margin for legend
     const width = 400 - margin.left - margin.right;
     const height = 300 - margin.top - margin.bottom;
-    
+
     const svg = d3.select(selector)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -491,10 +663,32 @@ function createGroupedEducationGenderChart(data, selector) {
     // X-axis
     svg.append("g")
         .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x0));
+        .call(d3.axisBottom(x0))
+        .selectAll("text")
+        .attr("transform", "rotate(90)") // Rotate text labels
+        .attr("x", 10) // Adjust x position for readability
+        .attr("y", -5) // Adjust y position for readability
+        .style("text-anchor", "start"); // Align text to start
+
+    // X-axis title
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 20) // Adjust position based on bottom margin
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .text("Faixas Etárias");
 
     // Y-axis
     svg.append("g").call(d3.axisLeft(y));
+
+    // Y-axis title
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", 0 - height / 2)
+        .attr("y", 0 - margin.left)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Total");
 
     // Chart title
     svg.append("text")
@@ -503,7 +697,29 @@ function createGroupedEducationGenderChart(data, selector) {
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .text("Distribuição por Gênero e Escolaridade");
+
+    // Add legend
+    const legend = svg.append("g")
+        .attr("transform", `translate(${width - 10}, 0)`); // Position the legend to the right of the chart
+
+    data[0].values.forEach((d, i) => {
+        const legendRow = legend.append("g")
+            .attr("transform", `translate(0, ${i * 20})`); // Space out legend rows
+
+        legendRow.append("rect")
+            .attr("width", 12)
+            .attr("height", 12)
+            .attr("fill", color(d.group));
+
+        legendRow.append("text")
+            .attr("x", 18)
+            .attr("y", 10)
+            .attr("font-size", "12px")
+            .attr("text-anchor", "start")
+            .text(d.group); // Use the group name as legend label
+    });
 }
+
 
 // Make checkboxes mutually exclusive but ensure at least one remains selected
 function makeCheckboxesExclusive(containerId) {
@@ -526,7 +742,7 @@ function makeCheckboxesExclusive(containerId) {
             }
 
             // Trigger filter update if needed
-            updateChartsWithFilters(isStackChart);
+            updateChartsWithFilters(true);
         });
     });
 }
@@ -561,18 +777,30 @@ function updateChartsWithFilters(isStackChart = false) {
 
 
     if (isStackChart) {
-        console.log("Entrei aqui")
-        console.log(selectedEducationLevels)
+        
         const filteredData = prepareEducationStackedData(currentChartData, selectedEducationLevels);
+        const filteredData2 = prepareEducationPieChart(currentChartData, selectedEducationLevels);
+    
         // Clear existing chart
         d3.select("#chart-stacked-bar").html("");
 
         // Re-render the chart with filtered data
         createStackedBarChart(filteredData, "#chart-stacked-bar");
+
+        // Clear existing chart
+        d3.select("#chart-donut").html("");
+
+        // Re-render the chart with filtered data
+        createDonutChart(filteredData2, "#chart-donut");
+
+        // Clear existing chart
+        d3.select("#pyramid-svg").html("");
+
+        // Re-render the chart with filtered data
+        createPopulationPyramid(filteredData, "#pyramid-svg");
     };
     
 }
-
 
 function getSelectedFilters() {
     const selectedGenders = Array.from(document.querySelectorAll("#gender-filters input:checked")).map(el => el.value);
@@ -583,7 +811,6 @@ function getSelectedFilters() {
 
     return { selectedGenders, selectedEducationLevels };
 }
-
 
 function prepareEducationAndGenderFilteredData(data, selectedGenders, selectedEducationLevels, includeAgeRanges = true) {
     const ageRanges = [
@@ -615,8 +842,6 @@ function prepareEducationAndGenderFilteredData(data, selectedGenders, selectedEd
                 });
             });
         });
-
-        console.log({ faixa: age, values });
 
         return { faixa: age, values }; // Grouped by age range
     });
@@ -667,4 +892,54 @@ function prepareEducationStackedData(data, selectedEducationLevels, includeAgeRa
         });
         return { faixa: age, homens, mulheres };
     });
+}
+
+function prepareEducationPieChart(data, selectedEducationLevels) {
+
+    const ageRanges = [
+        "0:14", "15:19", "20:24", "25:29", "30:34",
+        "35:39", "40:44", "45:49", "50:54", "55:59",
+        "60:64", "65:69", "70:74", "75+"
+    ];
+    
+    const genders = ["H", "M"];
+    let totalHomens = 0;
+    let totalMulheres = 0;
+
+    ageRanges.map(age => {
+        selectedEducationLevels.forEach(level => {
+            genders.forEach(gender => {
+                const key = `${gender}-${age}-${level}`;
+                if (gender === "H") {
+                    totalHomens += +data[key] || 0;
+                } else if (gender === "M") {
+                    totalMulheres += +data[key] || 0;
+                }
+            });
+        });
+    });
+    
+    console.log("Homens:", totalHomens);
+    console.log("Mulheres:", totalMulheres);
+
+    return [
+        { label: "Homens", value: totalHomens },
+        { label: "Mulheres", value: totalMulheres }
+    ];
+}
+
+function prepareTop10Data(data, currentFilter) {
+    // Example structure for data: { "local": { "população": 1000, "escolaridade": 500, "desemprego": 200 } }
+    
+    console.log("Dados para o top 10:", data);
+    
+    const sortedData = Object.keys(data)
+        .map(location => ({
+            location,
+            value: data[location][currentFilter] || 0
+        }))
+        .sort((a, b) => b.value - a.value) // Sort descending by value
+        .slice(0, 10); // Take top 10
+
+    return sortedData;
 }
